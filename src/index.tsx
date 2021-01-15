@@ -1,17 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import { Provider } from "react-redux";
+import { Store } from "redux";
+import appState from "./state/appState";
+import configStore from "./store/configStore";
+const store = configStore();
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+interface Props {
+  store: Store<appState>;
+}
+
+const Root: React.FunctionComponent<Props> = (props) => {
+  return (
+    <Provider store={props.store}>
+      <App />
+    </Provider>
+  );
+};
+
+ReactDOM.render(<Root store={store} />, document.getElementById("root"));
